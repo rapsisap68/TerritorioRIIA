@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía: Envigado, Territorio Plateado</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .kpi-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        .kpi-value {
+            font-weight: 900;
+            line-height: 1.1;
+        }
+        .flow-step {
+            border-width: 2px;
+            border-style: solid;
+            transition: all 0.3s ease;
+        }
+        .flow-arrow::after {
+            content: '→';
+            font-size: 2rem;
+            line-height: 1;
+            margin: 0 1rem;
+        }
+        .flow-arrow:last-child::after {
+            content: '';
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-3">
+            <ul class="flex justify-center space-x-4 md:space-x-8 overflow-x-auto">
+                <li><a href="#vision" class="text-sm md:text-base font-semibold text-gray-600 hover:text-[#005f73]">Visión</a></li>
+                <li><a href="#demografia" class="text-sm md:text-base font-semibold text-gray-600 hover:text-[#005f73]">Demografía</a></li>
+                <li><a href="#pilares" class="text-sm md:text-base font-semibold text-gray-600 hover:text-[#005f73]">8 Pilares</a></li>
+                <li><a href="#gobernanza" class="text-sm md:text-base font-semibold text-gray-600 hover:text-[#005f73]">Gobernanza</a></li>
+                <li><a href="#turismo" class="text-sm md:text-base font-semibold text-gray-600 hover:text-[#005f73]">Turismo</a></li>
+                <li><a href="#movimiento-plateado" class="text-sm md:text-base font-semibold text-gray-600 hover:text-[#005f73]">Mov. Plateado</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="vision" class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-black text-[#005f73] mb-4">Envigado: Territorio Plateado</h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto">Una guía visual para transformar nuestro municipio en un modelo de inclusión, sostenibilidad y bienestar para todas las generaciones.</p>
+             <div class="mt-6 text-center">
+                <p class="text-md font-semibold text-gray-700">Por: Ramiro A Paniagua G. para Movimiento Plateado</p>
+                <div class="flex justify-center items-center gap-4 mt-2">
+                    <span class="bg-[#e9d8a6] text-[#005f73] text-sm font-semibold px-3 py-1 rounded-full">@MovimientoPlateado</span>
+                    <span class="bg-gray-200 text-gray-700 text-sm font-semibold px-3 py-1 rounded-full">#TerritorioPlateado</span>
+                    <span class="bg-gray-200 text-gray-700 text-sm font-semibold px-3 py-1 rounded-full">#Inclusion</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="demografia" class="mb-16">
+            <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#0a9396] mb-2 text-center">La Realidad Demográfica: El Momento de Actuar es Ahora</h2>
+                <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Envigado experimenta un envejecimiento acelerado. Esta transición demográfica no es un desafío futuro, sino una realidad presente que exige una planificación estratégica inmediata para garantizar un futuro próspero y equitativo.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4 text-center">Proyección Población Mayor de 60 Años</h3>
+                        <div class="chart-container h-64 md:h-80">
+                            <canvas id="populationChart"></canvas>
+                        </div>
+                        <p class="text-center text-sm text-gray-500 mt-4">La población mayor de 60 años superará el 22% del total en 2025, una tendencia que subraya la urgencia de adaptar nuestros servicios e infraestructura.</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="kpi-card">
+                            <p class="text-lg font-semibold text-[#0a9396]">Población 60+ (2024)</p>
+                            <p class="kpi-value text-4xl md:text-5xl text-[#005f73]">22.2%</p>
+                            <p class="text-sm text-gray-500">55,194 habitantes</p>
+                        </div>
+                        <div class="kpi-card">
+                            <p class="text-lg font-semibold text-[#0a9396]">Población con Discapacidad</p>
+                            <p class="kpi-value text-4xl md:text-5xl text-[#005f73]">56.8%</p>
+                            <p class="text-sm text-gray-500">de las personas con discapacidad son mayores de 50 años.</p>
+                        </div>
+                        <div class="kpi-card">
+                            <p class="text-lg font-semibold text-[#0a9396]">Género en la Vejez</p>
+                            <p class="kpi-value text-4xl md:text-5xl text-[#005f73]">60.4%</p>
+                            <p class="text-sm text-gray-500">de los adultos mayores son mujeres.</p>
+                        </div>
+                        <div class="kpi-card">
+                            <p class="text-lg font-semibold text-[#0a9396]">Alteraciones Frecuentes</p>
+                            <p class="kpi-value text-4xl md:text-5xl text-[#005f73]">51.5%</p>
+                            <p class="text-sm text-gray-500">presentan dificultades de sistema nervioso o movimiento.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pilares" class="mb-16">
+            <h2 class="text-3xl font-bold text-[#0a9396] mb-8 text-center">Los 8 Pilares para la Transformación</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center text-center">
+                    <div class="text-4xl text-[#94d2bd] mb-3">🌳</div>
+                    <h3 class="font-bold text-lg text-[#005f73]">1. Espacios y Edificios</h3>
+                    <p class="text-sm text-gray-600 mt-2">Crear entornos públicos seguros, accesibles y agradables, con parques, aceras y edificios adaptados para todos.</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center text-center">
+                    <div class="text-4xl text-[#94d2bd] mb-3">🚌</div>
+                    <h3 class="font-bold text-lg text-[#005f73]">2. Transporte</h3>
+                    <p class="text-sm text-gray-600 mt-2">Garantizar una movilidad autónoma, segura y digna a través de un sistema de transporte público asequible y accesible.</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center text-center">
+                    <div class="text-4xl text-[#94d2bd] mb-3">🏠</div>
+                    <h3 class="font-bold text-lg text-[#005f73]">3. Vivienda</h3>
+                    <p class="text-sm text-gray-600 mt-2">Promover viviendas asequibles, adaptables y bien ubicadas que permitan "envejecer en casa" con seguridad y dignidad.</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center text-center">
+                    <div class="text-4xl text-[#94d2bd] mb-3">🤝</div>
+                    <h3 class="font-bold text-lg text-[#005f73]">4. Participación Social</h3>
+                    <p class="text-sm text-gray-600 mt-2">Ofrecer un abanico de oportunidades de participación que fomenten los vínculos intergeneracionales y combatan el aislamiento.</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center text-center">
+                    <div class="text-4xl text-[#e9d8a6] mb-3">❤️</div>
+                    <h3 class="font-bold text-lg text-[#005f73]">5. Respeto e Inclusión</h3>
+                    <p class="text-sm text-gray-600 mt-2">Combatir el edadismo y construir una imagen pública positiva del envejecimiento a través de la educación y el respeto.</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center text-center">
+                    <div class="text-4xl text-[#e9d8a6] mb-3">💼</div>
+                    <h3 class="font-bold text-lg text-[#005f73]">6. Empleo y Participación Cívica</h3>
+                    <p class="text-sm text-gray-600 mt-2">Valorar la experiencia, creando oportunidades de voluntariado y empleo flexible para quienes desean seguir activos.</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center text-center">
+                    <div class="text-4xl text-[#e9d8a6] mb-3">📱</div>
+                    <h3 class="font-bold text-lg text-[#005f73]">7. Comunicación e Información</h3>
+                    <p class="text-sm text-gray-600 mt-2">Asegurar que la información vital llegue a todos a través de canales diversos, accesibles y confiables, cerrando la brecha digital.</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center text-center">
+                    <div class="text-4xl text-[#e9d8a6] mb-3">❤️‍🩹</div>
+                    <h3 class="font-bold text-lg text-[#005f73]">8. Salud y Apoyo Comunitario</h3>
+                    <p class="text-sm text-gray-600 mt-2">Garantizar un sistema de salud y servicios sociales integrado, coordinado y centrado en la persona.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="gobernanza" class="mb-16">
+            <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#0a9396] mb-2 text-center">Una Gobernanza para la Acción</h2>
+                <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">La transformación requiere un proceso deliberado y participativo. Proponemos un modelo cíclico de implementación que asegura la sostenibilidad y la mejora continua, alineando la acción con el Plan de Desarrollo Municipal.</p>
+                <div class="flex flex-col md:flex-row justify-center items-center text-center">
+                    <div class="flex flex-col items-center flow-arrow">
+                        <div class="flow-step border-[#0a9396] bg-white text-[#005f73] rounded-full w-32 h-32 flex items-center justify-center p-4">
+                            <p class="font-bold">Fase 1: Diagnóstico y Planificación</p>
+                        </div>
+                    </div>
+                     <div class="flex flex-col items-center flow-arrow">
+                        <div class="flow-step border-[#ee9b00] bg-white text-[#005f73] rounded-full w-32 h-32 flex items-center justify-center p-4">
+                           <p class="font-bold">Fase 2: Implementación y Colaboración</p>
+                        </div>
+                    </div>
+                     <div class="flex flex-col items-center flow-arrow">
+                        <div class="flow-step border-[#ca6702] bg-white text-[#005f73] rounded-full w-32 h-32 flex items-center justify-center p-4">
+                            <p class="font-bold">Fase 3: Monitoreo y Mejora</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="mt-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 text-center">Alineación Estratégica: Presupuesto y Acción</h3>
+                    <p class="text-center text-gray-600 mb-6 max-w-3xl mx-auto">El Territorio Plateado no es un gasto adicional, sino un marco para ejecutar de forma más efectiva el Plan de Desarrollo 2024-2027. Cada pilar se alinea con programas y proyectos ya financiados.</p>
+                    <div class="chart-container h-80 md:h-96">
+                        <canvas id="alignmentChart"></canvas>
+                    </div>
+                     <p class="text-center text-sm text-gray-500 mt-4">El gráfico de radar muestra cómo los pilares del Territorio Plateado se conectan directamente con las líneas estratégicas del Plan de Desarrollo, demostrando una alta sinergia y viabilidad.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="turismo" class="mb-16">
+            <div class="bg-gradient-to-r from-[#005f73] to-[#0a9396] rounded-lg shadow-lg p-6 md:p-8 text-white">
+                <h2 class="text-3xl font-bold mb-4 text-center">Un Doble Retorno: Bienestar Social y Prosperidad Económica</h2>
+                 <p class="text-center text-white/90 mb-8 max-w-3xl mx-auto">Cada inversión en un Envigado más inclusivo para sus residentes es también una inversión directa en un producto turístico de alto valor: el Turismo Plateado.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div>
+                        <div class="text-5xl mb-3">📈</div>
+                        <h3 class="text-2xl font-bold text-[#94d2bd]">Mercado Global</h3>
+                        <p class="mt-2">El turismo sénior es un mercado global de más de **1.7 billones de dólares**, con viajeros de alto poder adquisitivo.</p>
+                    </div>
+                    <div>
+                        <div class="text-5xl mb-3">🗓️</div>
+                        <h3 class="text-2xl font-bold text-[#94d2bd]">Combate la Estacionalidad</h3>
+                        <p class="mt-2">Los turistas plateados suelen viajar en temporada baja, distribuyendo los ingresos turísticos a lo largo del año.</p>
+                    </div>
+                    <div>
+                        <div class="text-5xl mb-3">🗺️</div>
+                        <h3 class="text-2xl font-bold text-[#94d2bd]">Desarrollo Local</h3>
+                        <p class="mt-2">Buscan experiencias auténticas como la gastronomía y cultura local, potenciando economías sostenibles.</p>
+                    </div>
+                </div>
+                 <div class="text-center mt-10">
+                    <a href="#" class="bg-[#ee9b00] text-[#001219] font-bold py-3 px-8 rounded-full hover:bg-[#ca6702] transition-colors">Conoce la Ruta Plateada de Envigado</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="movimiento-plateado" class="mb-16">
+            <div class="bg-white rounded-lg shadow-lg p-6 md:p-8 text-center">
+                 <h2 class="text-3xl font-bold text-[#005f73] mb-4">Movimiento Plateado</h2>
+                 <a href="https://movimientoplateado.com/" target="_blank" class="text-xl font-semibold text-[#0a9396] hover:underline">www.movimientoplateado.com</a>
+                 <p class="text-gray-600 mt-4 max-w-3xl mx-auto italic">“Red inclusiva, activa, propositiva y participativa para cocrear, proponer y Actuando para la Vida Plena de personas plateadas, sus familias y la sociedad, en todo territorio donde llegamos”.</p>
+                 <p class="text-gray-700 mt-3 max-w-3xl mx-auto font-semibold">Juntos, hacemos de Envigado un modelo a seguir de bienestar e inclusión para todas las edades.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-8">
+        <div class="container mx-auto text-center">
+            <p class="text-lg italic text-gray-300 mb-8">"La experiencia es la brújula que guía el futuro. Cada arruga cuenta una historia de sabiduría y resiliencia."</p>
+            
+            <h3 class="text-xl font-bold text-[#94d2bd] mb-6">Conecta con Nosotros</h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-start">
+                
+                <div class="flex flex-col items-center">
+                    <i class="fas fa-globe text-3xl mb-2 text-[#94d2bd]"></i>
+                    <a href="https://movimientoplateado.com/" target="_blank" class="hover:text-[#94d2bd] transition-colors">Sitio Web</a>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://movimientoplateado.com/" alt="QR para sitio web" class="mt-2 rounded-lg">
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <i class="fab fa-facebook text-3xl mb-2 text-[#94d2bd]"></i>
+                    <a href="https://www.facebook.com/profile.php?id=61573086449893" target="_blank" class="hover:text-[#94d2bd] transition-colors">Club Plateado</a>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://www.facebook.com/profile.php?id=61573086449893" alt="QR para Facebook" class="mt-2 rounded-lg">
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <i class="fab fa-youtube text-3xl mb-2 text-[#94d2bd]"></i>
+                    <a href="https://www.youtube.com/@MovimientoPlateado" target="_blank" class="hover:text-[#94d2bd] transition-colors">YouTube</a>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://www.youtube.com/@MovimientoPlateado" alt="QR para YouTube" class="mt-2 rounded-lg">
+                </div>
+
+                <div class="flex flex-col items-center">
+                     <i class="fab fa-linkedin text-3xl mb-2 text-[#94d2bd]"></i>
+                    <a href="https://www.linkedin.com/in/ramiropaniagua" target="_blank" class="hover:text-[#94d2bd] transition-colors">Ramiro Paniagua</a>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://www.linkedin.com/in/ramiropaniagua" alt="QR para LinkedIn" class="mt-2 rounded-lg">
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <i class="fas fa-envelope text-3xl mb-2 text-[#94d2bd]"></i>
+                    <a href="mailto:movimientoplateado@gmail.com" class="hover:text-[#94d2bd] transition-colors">Correo</a>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=mailto:movimientoplateado@gmail.com" alt="QR para correo" class="mt-2 rounded-lg">
+                </div>
+            </div>
+            <p class="text-xs text-gray-500 mt-10">&copy; 2024. Infografía creada como interpretación visual de la "Guía Estratégica para el Desarrollo de Envigado como Territorio Plateado".</p>
+        </div>
+    </footer>
+
+
+    <script>
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
+
+        const wrapLabel = (label) => {
+            const maxLength = 16;
+            if (label.length <= maxLength) return label;
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + ' ' + word).length > maxLength) {
+                    lines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine = (currentLine + ' ' + word).trim();
+                }
+            });
+            lines.push(currentLine);
+            return lines;
+        };
+
+        const brilliantBlues = {
+            deepBlue: '#005f73',
+            brightBlue: '#0a9396',
+            lightAqua: '#94d2bd',
+            paleYellow: '#e9d8a6',
+            brightOrange: '#ee9b00',
+            burntOrange: '#ca6702',
+            darkRed: '#bb3e03',
+            richRed: '#ae2012',
+            darkestBlue: '#001219'
+        };
+
+        const populationData = {
+            labels: ['2023', '2024', '2025'],
+            datasets: [{
+                label: 'Población 60+ (miles)',
+                data: [53.1, 55.194, 57.085],
+                borderColor: brilliantBlues.brightBlue,
+                backgroundColor: 'rgba(10, 147, 150, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        };
+        new Chart(document.getElementById('populationChart'), {
+            type: 'line',
+            data: populationData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: { title: tooltipTitleCallback }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: 'Habitantes (en miles)'
+                        }
+                    }
+                }
+            }
+        });
+        
+        const alignmentLabels = [
+            'Espacios y Edificios', 
+            'Transporte', 
+            'Vivienda', 
+            'Participación Social', 
+            ['Respeto e', 'Inclusión Social'], 
+            ['Participación Cívica', 'y Empleo'], 
+            ['Comunicación e', 'Información'], 
+            ['Servicios de Apoyo', 'y Salud']
+        ];
+        
+        const alignmentData = {
+            labels: alignmentLabels,
+            datasets: [
+                {
+                    label: 'Línea: Equidad y Cierre de Brechas',
+                    data: [6, 4, 9, 10, 10, 7, 6, 10],
+                    fill: true,
+                    backgroundColor: 'rgba(0, 95, 115, 0.2)',
+                    borderColor: brilliantBlues.deepBlue,
+                    pointBackgroundColor: brilliantBlues.deepBlue,
+                },
+                {
+                    label: 'Línea: Oportunidades y Prosperidad',
+                    data: [4, 5, 6, 6, 5, 9, 7, 5],
+                    fill: true,
+                    backgroundColor: 'rgba(238, 155, 0, 0.2)',
+                    borderColor: brilliantBlues.brightOrange,
+                    pointBackgroundColor: brilliantBlues.brightOrange,
+                },
+                {
+                    label: 'Línea: Sostenible e Inteligente',
+                    data: [9, 9, 7, 4, 3, 5, 8, 4],
+                    fill: true,
+                    backgroundColor: 'rgba(10, 147, 150, 0.2)',
+                    borderColor: brilliantBlues.brightBlue,
+                    pointBackgroundColor: brilliantBlues.brightBlue,
+                }
+            ]
+        };
+
+        new Chart(document.getElementById('alignmentChart'), {
+            type: 'radar',
+            data: alignmentData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    tooltip: {
+                        callbacks: {
+                             title: function(tooltipItems) {
+                                let label = tooltipItems[0].label;
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                }
+                                return label;
+                             }
+                        }
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: {
+                            display: true
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 10,
+                        pointLabels: {
+                            font: {
+                                size: 10
+                            }
+                        }
+                    }
+                },
+                elements: {
+                    line: {
+                        borderWidth: 2
+                    }
+                }
+            }
+        });
+        
+        const navLinks = document.querySelectorAll('nav a');
+        const sections = document.querySelectorAll('main section');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('text-[#005f73]', 'font-bold');
+                link.classList.add('text-gray-600', 'font-semibold');
+                if(link.getAttribute('href').includes(current)){
+                    link.classList.add('text-[#005f73]', 'font-bold');
+                    link.classList.remove('text-gray-600', 'font-semibold');
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
